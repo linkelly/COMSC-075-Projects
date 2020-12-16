@@ -1,0 +1,162 @@
+import java.util.*;
+public class Project3 {
+    public static void main(String[] args) {
+        System.out.println("Data Entries System");
+        System.out.println("------------------------");
+
+        Scanner input = new Scanner(System.in);
+        String firstName;
+        String lastName;
+        String company;
+        int id;
+        double balance;
+        double total = 0;
+        String anotherCustomer = "y";
+
+        int size = Integer.parseInt(args[0]);
+        Customer[] customers = new Customer[size];
+
+        int[] ids = new int[size];
+        int i = 0;
+
+        while (anotherCustomer.equalsIgnoreCase("y")) {
+            System.out.print("First Name: ");
+            firstName = input.next();
+            System.out.print("Last Name: ");
+            lastName = input.next();
+            System.out.print("Company: ");
+            company = input.next();
+            while (true) {
+                System.out.print("3-digit ID: ");
+                id = input.nextInt();
+                if (id <=999 || id >= 10000){
+                    System.out.println("Try again.");
+                }
+                Arrays.sort(ids);
+                if (Arrays.binarySearch(ids, id) >= 0) {
+                    System.out.println("Duplicate found. Try again.");
+                } else {
+                    break;
+                }
+            }
+            System.out.print("Balance: $");
+            balance = input.nextDouble();
+
+            Customer c1 = new Customer(firstName, lastName, company, id, balance);
+            c1.printInfo();
+
+            String infoIsOK;
+            System.out.print("\nIs this information correct? Y for yes, N for no: ");
+            infoIsOK = input.next();
+            if (infoIsOK.equalsIgnoreCase("n")) {
+                String editCmd;
+                System.out.println("\nEdit Commands\nF - First Name\nL - Last Name\nC - Company\nB - Balance");
+                System.out.print("\nCommand: ");
+                editCmd = input.next();
+                if (editCmd.equalsIgnoreCase("f")) {
+                    System.out.print("\nNew First Name: ");
+                    firstName = input.next();
+                    c1.setFirstName(firstName);
+                    System.out.println("New Data Updated: " + c1.getFirstName());
+                } else if (editCmd.equalsIgnoreCase("l")) {
+                    System.out.print("\nNew Last Name: ");
+                    lastName = input.next();
+                    c1.setLastName(lastName);
+                    System.out.println("New Data Updated: " + c1.getLastName());
+                } else if (editCmd.equalsIgnoreCase("c")) {
+                    System.out.print("\nNew Company: ");
+                    company = input.next();
+                    c1.setCompany(company);
+                    System.out.println("New Data Updated: " + c1.getCompany());
+                } else if (editCmd.equalsIgnoreCase("b")) {
+                    System.out.print("\nNew Balance: $");
+                    balance = input.nextDouble();
+                    c1.setBalance(balance);
+                    System.out.println("New Data Updated: " + c1.getBalance());
+                } else {
+                    System.out.println();
+                    System.out.println("Sorry, but \"" + editCmd + "\" is not a valid command.");
+                }
+                c1.printInfo();
+            }
+            ids[i] = id;
+            customers[i] = c1;
+            total = total + balance;
+            i++;
+            System.out.print("\nAdd another customer? Y for yes, N for no: ");
+            anotherCustomer = input.next();
+        }
+        System.out.println("\nList of customers:");
+        System.out.println("-------------------------------------------------- ");
+        for (int j = 0; j < i; j++) {
+            customers[j].printInfo();
+        }
+        System.out.printf("Total of all balances: $%.2f\n", total);
+        System.out.println("-------------------------------------------------- ");
+        System.out.println("Bye!");
+    }
+}
+
+class Customer {
+
+    private String firstName;
+    private String lastName;
+    private String company;
+    private int id;
+    private double balance;
+    //private double total;
+
+    public Customer() {
+        this.firstName = "John";
+        this.lastName = "Doe";
+        this.company = "EVC";
+        this.id = 123;
+        this.balance = 300.00;
+    }
+    public Customer(String fn, String ln, String comp, int idcode, double balance) {
+        this.firstName = fn;
+        this.lastName = ln;
+        this.company = comp;
+        this.id = idcode;
+        this.balance = balance;
+    }
+    public void setFirstName(String newFirstName) { //Setter Mutator
+        firstName = newFirstName;
+    }
+    public String getFirstName() //Getter Accessor
+    {
+        return firstName;
+    }
+    public void setLastName(String newLastName) {
+        lastName = newLastName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setCompany(String newCompany) {
+        company = newCompany;
+    }
+    public String getCompany() {
+        return company;
+    }
+    public void setId(int newId) {
+        id = newId;
+    }
+    public int getId() {
+        return id;
+    }
+    public void setBalance(double newBalance) {
+        balance = newBalance;
+    }
+    public double getBalance() {
+        return balance;
+    }
+    public void printInfo() {
+        System.out.print(getLastName() + " , ");
+        System.out.print(getFirstName() + " | ");
+        System.out.print(getCompany() + " | ");
+        System.out.print(getId() + " | $");
+        System.out.print(getBalance());
+        System.out.println();
+    }
+}
