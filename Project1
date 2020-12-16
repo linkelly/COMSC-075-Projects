@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class MainClass {
+    public static void main(String[] args){ 
+        Scanner input = new Scanner(System.in);
+        
+        System.out.print("Enter your weekly work hours (hrs): ");
+        double hours = input.nextDouble();
+        System.out.print("Enter your hourly pay rate ($): ");
+        double hrPayRate = input.nextDouble();
+        
+        double weeklyGrossPay = hours * hrPayRate;
+        System.out.println("Your weekly gross pay is ($): " + weeklyGrossPay);
+        
+        if (hours >= 40){
+          double taxAmount = weeklyGrossPay * 0.20;
+          System.out.println("Your weekly tax amount is is ($): " + taxAmount);
+          double takeHomePay = weeklyGrossPay - taxAmount;
+          System.out.println("Your weekly take home pay is ($): " + takeHomePay);
+        }
+        else{
+          double taxAmount = weeklyGrossPay * 0.18;
+          System.out.println("Your weekly tax amount is ($): " + taxAmount);
+          double takeHomePay = weeklyGrossPay - taxAmount;
+          System.out.println("Your weekly take home pay is ($): " + takeHomePay);
+        }
+        
+        double annualIncome = weeklyGrossPay * 52;
+        System.out.println("Your annual income is ($): " + annualIncome);
+
+        System.out.println("Bye!");
+        
+    }
+}
